@@ -3,8 +3,8 @@ import {axiosWithAuth} from '../utils/axiosWithAuth';
 import axios from 'axios';
 
 
-const LoginForm = () => {
-
+const LoginForm = props => {
+    // console.log(props);
     //initialize state
     const [userCreds, setUserCreds] = useState({
         credentials: {
@@ -13,10 +13,12 @@ const LoginForm = () => {
         }
     });
 
+    const [loading, setLoading] = useState(false);
+
 
 
    const handleChange = event => {
-       console.log(event.target.value);
+    //    console.log(event.target.value);
         setUserCreds({
             credentials: {
                 ...userCreds.credentials,
@@ -27,15 +29,21 @@ const LoginForm = () => {
     
     //login endpoint baseURL/api/login
    const loginSubmit = event => {
-       event.preventDefault();
-       console.log(userCreds.credentials);
+        event.preventDefault();
+        // setLoading(true);
        console.log(`button fired`);
-        axios.post("http://localhost:5000/api/login", userCreds.credentials)
-        .then( response => {
-            console.log(response)
-            localStorage.setItem('token', response.data.payload)
+        axiosWithAuth().post("http://localhost:5000/api/login", userCreds.credentials)
+        .then(response => {
+            // setLoading(false);
+            // console.log(response);
+            localStorage.setItem('token', response.data.payload);
+            props.history.push("/friends");
         })
-        .catch(error => console.log(error)) 
+        // .then(() => console.log(localStorage.token))
+        .catch(error => {
+            setLoading(false);
+            console.log(error);
+        }); 
     };
     
     
