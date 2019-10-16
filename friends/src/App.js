@@ -14,10 +14,12 @@ function App() {
         <br></br>       
         <Link to="/friends">Friend List</Link>
         <Switch>
+          
           <PrivateRoute exact path="/friends" component={FriendList} />
           <Route path="/login" component={LoginForm}/>
           <Route exact path="/"  component={LoginForm} />
           <Route  component={LoginForm}/> 
+          
         </Switch>
       </div>
     </Router>

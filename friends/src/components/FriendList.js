@@ -11,7 +11,7 @@ const FriendList = () => {
         axiosWithAuth().get('api/friends')
         .then(response => {
             console.log(response.data);
-            // setFriendList(response)
+            setFriendList(response.data)
         })
         .catch(error => console.log(error))
     },[])
@@ -22,7 +22,12 @@ const FriendList = () => {
     
     return (
         <div>
-            <h1>Friends List Here</h1>
+            {friendList.map( (friend,index) => (
+                <Card 
+                    friend={friend}
+                    key={index}
+                />
+            ))}
         </div>
     )
 }
